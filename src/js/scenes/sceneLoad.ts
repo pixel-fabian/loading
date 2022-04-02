@@ -31,10 +31,14 @@ export default class SceneLoad extends Phaser.Scene {
     });
 
     // load all textures
-    this.load.spritesheet(TEXTURES.BUTTON_PLAY, 'assets/button_01_play.png', {
-      frameWidth: 64,
-      frameHeight: 32,
-    });
+    this.load.spritesheet(
+      TEXTURES.PLACEHOLDER,
+      'assets/sprites/placeholder.png',
+      {
+        frameWidth: 32,
+        frameHeight: 32,
+      },
+    );
   }
 
   create(): void {

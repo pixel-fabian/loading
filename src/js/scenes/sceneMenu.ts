@@ -18,7 +18,15 @@ export default class SceneMenu extends Phaser.Scene {
   preload(): void {}
 
   create(): void {
-    this._createButton(400, 200, TEXTURES.BUTTON_PLAY, SCENES.GAME);
+    const screenCenterX = this.scale.width / 2;
+    this.add
+      .text(screenCenterX, 80, 'Loading...', {
+        fontFamily: 'BitPotion',
+        color: '#fff',
+        fontSize: '92px',
+      })
+      .setOrigin(0.5);
+    this._createTextButton(screenCenterX, 200, '< play >', SCENES.GAME);
   }
 
   update(): void {}
@@ -27,41 +35,28 @@ export default class SceneMenu extends Phaser.Scene {
   // Private methods                              //
   //////////////////////////////////////////////////
 
-  _createButton(nX: number, nY: number, sTextureKey: TEXTURES, sStartScene: SCENES) {
-    const button = this.add.sprite(nX, nY, sTextureKey, 0);
-    button.setScale(3);
-    const pressAnimKey = `press${sTextureKey}`;
-    this.anims.create({
-      key: pressAnimKey,
-      frames: this.anims.generateFrameNumbers(sTextureKey, {
-        start: 0,
-        end: 2,
-      }),
-      frameRate: 12,
-      repeat: 0,
+  _createTextButton(
+    nX: number,
+    nY: number,
+    sText: string,
+    sStartScene: SCENES,
+  ) {
+    const text = this.add
+      .text(nX, nY, sText, {
+        fontFamily: 'BitPotion',
+        color: '#fff',
+        fontSize: '42px',
+      })
+      .setOrigin(0.5);
+    text.setInteractive({ useHandCursor: true });
+    text.on('pointerover', () => {
+      text.setColor('#eee');
     });
-    button.setInteractive({ useHandCursor: true });
-    button.on('pointerover', () => {
-      button.setFrame(3);
+    text.on('pointerout', () => {
+      text.setColor('#fff');
     });
-    button.on('pointerout', () => {
-      button.setFrame(0);
+    text.on('pointerdown', () => {
+      this.scene.start(sStartScene, {});
     });
-    button.on('pointerdown', () => {
-      button.play(pressAnimKey);
-    });
-    button.on(
-      'animationcomplete',
-      (animation) => {
-        switch (animation.key) {
-          case pressAnimKey:
-            this.scene.start(sStartScene)
-            break;
-        }
-      },
-      this,
-    );
-
-    return button;
   }
 }
