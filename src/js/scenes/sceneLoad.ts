@@ -31,7 +31,13 @@ export default class SceneLoad extends Phaser.Scene {
     });
 
     // load all textures
-    this.load.image(TEXTURES.BACKGROUND, 'assets/sprites/human.png');
+    this.load.image(TEXTURES.HUMAN, 'assets/sprites/human.png');
+    this.load.image(TEXTURES.HUMAN_WINK, 'assets/sprites/human_wink.png');
+    this.load.image(TEXTURES.HUMAN_SMILE, 'assets/sprites/human_smile.png');
+    this.load.image(
+      TEXTURES.HUMAN_SMILE_WINK,
+      'assets/sprites/human_smile_wink.png',
+    );
     this.load.spritesheet(TEXTURES.BULLET, 'assets/sprites/bullet.png', {
       frameWidth: 16,
       frameHeight: 16,

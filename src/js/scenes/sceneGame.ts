@@ -37,10 +37,17 @@ export default class SceneGame extends Phaser.Scene {
     const camera = this.cameras.add(0, 0, 800, 600);
     camera.setBackgroundColor('rgba(163, 208, 202, 1)');
     this.background = this.add
-      .image(0, 0, TEXTURES.BACKGROUND)
+      .image(0, 0, TEXTURES.HUMAN)
       .setOrigin(0, 0)
       .setScale(8)
       .setAlpha(0.2);
+    this.time.addEvent({
+      delay: 6000,
+      callback: () => {
+        this._humanWink();
+      },
+      loop: true,
+    });
     this._createControls();
     this.loadingBar = new LoadingBar(this);
     this.parcels = new Parcels(this.physics.world, this);
@@ -125,5 +132,16 @@ export default class SceneGame extends Phaser.Scene {
     }
     playerDirection.setLength(200);
     this.player.setVelocity(playerDirection.x, playerDirection.y);
+  }
+
+  _humanWink() {
+    this.background.setTexture(TEXTURES.HUMAN_WINK);
+    this.time.addEvent({
+      delay: 200,
+      callback: () => {
+        this.background.setTexture(TEXTURES.HUMAN);
+      },
+      loop: false,
+    });
   }
 }
