@@ -13,6 +13,7 @@ export default class SceneGame extends Phaser.Scene {
   private keyD: Phaser.Input.Keyboard.Key;
   private keyE: Phaser.Input.Keyboard.Key;
   private keyQ: Phaser.Input.Keyboard.Key;
+  private background: Phaser.GameObjects.Image;
   private loadingBar: LoadingBar;
   private parcels: Parcels;
   private player: Player;
@@ -35,6 +36,11 @@ export default class SceneGame extends Phaser.Scene {
   create(): void {
     const camera = this.cameras.add(0, 0, 800, 600);
     camera.setBackgroundColor('rgba(163, 208, 202, 1)');
+    this.background = this.add
+      .image(0, 0, TEXTURES.BACKGROUND)
+      .setOrigin(0, 0)
+      .setScale(8)
+      .setAlpha(0.2);
     this._createControls();
     this.loadingBar = new LoadingBar(this);
     this.parcels = new Parcels(this.physics.world, this);

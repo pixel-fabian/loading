@@ -31,6 +31,7 @@ export default class SceneLoad extends Phaser.Scene {
     });
 
     // load all textures
+    this.load.image(TEXTURES.BACKGROUND, 'assets/sprites/human.png');
     this.load.spritesheet(TEXTURES.BULLET, 'assets/sprites/bullet.png', {
       frameWidth: 16,
       frameHeight: 16,

@@ -21,7 +21,7 @@ export default class LoadingBar {
     this.progress = this.progress + percent;
     this.width = this.targetWidth * this.progress;
     this.loadingBarFg.clear();
-    this.loadingBarFg.fillRect(745, 295, this.width, 90);
+    this.loadingBarFg.fillRect(745, 280, this.width, 90);
     this.loadingBarFg.setAlpha(0.2);
   }
 
@@ -77,7 +77,7 @@ export default class LoadingBar {
         color: 0xbbbbbb,
       },
     });
-    this.loadingBarBg.fillRect(30, 290, 720, 100);
+    this.loadingBarBg.fillRect(30, 275, 720, 100);
     this.loadingBarBg.setAlpha(0.2);
 
     this.loadingBarFg = this.scene.add.graphics({
@@ -89,13 +89,12 @@ export default class LoadingBar {
 
     const screenCenterX = this.scene.scale.width / 2;
     this.text = this.scene.add
-      .text(screenCenterX, 330, 'Loading...', {
+      .text(screenCenterX, 315, 'Loading...', {
         fontFamily: 'BitPotion',
         color: '#000',
         fontSize: '92px',
       })
-      .setOrigin(0.5)
-      .setAlpha(0.2);
+      .setOrigin(0.5);
     this.text.flipX = true;
   }
 }
