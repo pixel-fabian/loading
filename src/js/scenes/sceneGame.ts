@@ -27,7 +27,7 @@ export default class SceneGame extends Phaser.Scene {
         color: 0xcccccc,
       },
     });
-    loadingBar.fillRect(15, 495, 770 * 1, 90);
+    loadingBar.fillRect(785, 495, -770 * 0.2, 90);
     const screenCenterX = this.scale.width / 2;
     const loadingText = this.add
       .text(screenCenterX, 530, 'Loading...', {
