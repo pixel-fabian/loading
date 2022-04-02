@@ -35,6 +35,10 @@ export default class SceneLoad extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
+    this.load.spritesheet(TEXTURES.PLAYER, 'assets/sprites/placeholder.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
   }
 
   create(): void {
