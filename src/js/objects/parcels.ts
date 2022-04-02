@@ -1,7 +1,7 @@
 import TEXTURES from '../constants/TextureKeys';
 
 export default class Parcels extends Phaser.Physics.Arcade.Group {
-  private velocity = 50;
+  private velocity = 100;
   private textures?: Array<string>;
 
   constructor(world: Phaser.Physics.Arcade.World, scene: Phaser.Scene) {
@@ -32,6 +32,6 @@ export default class Parcels extends Phaser.Physics.Arcade.Group {
   }
 
   _getRandomY() {
-    return Phaser.Math.Between(0, this.scene.scale.height);
+    return Phaser.Math.Between(20, this.scene.scale.height - 20);
   }
 }

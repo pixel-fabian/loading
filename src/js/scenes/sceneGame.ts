@@ -123,7 +123,7 @@ export default class SceneGame extends Phaser.Scene {
     } else if (this.keyS.isDown) {
       playerDirection.y += 1;
     }
-    playerDirection.setLength(100);
+    playerDirection.setLength(200);
     this.player.setVelocity(playerDirection.x, playerDirection.y);
   }
 }
