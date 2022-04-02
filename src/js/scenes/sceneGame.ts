@@ -39,7 +39,7 @@ export default class SceneGame extends Phaser.Scene {
 
   create(): void {
     const camera = this.cameras.add(0, 0, 800, 600);
-    camera.setBackgroundColor('rgba(163, 208, 202, 1)');
+    camera.setBackgroundColor('rgba(103, 130, 126, 1)');
     this.background = this.add
       .image(0, 0, TEXTURES.HUMAN)
       .setOrigin(0, 0)

@@ -40,6 +40,7 @@ export default class SceneLoad extends Phaser.Scene {
       TEXTURES.HUMAN_SMILE_WINK,
       'assets/sprites/human_smile_wink.png',
     );
+    this.load.image(TEXTURES.MENU_BG, 'assets/sprites/menu.png');
     this.load.spritesheet(TEXTURES.BULLET, 'assets/sprites/bullet.png', {
       frameWidth: 16,
       frameHeight: 16,

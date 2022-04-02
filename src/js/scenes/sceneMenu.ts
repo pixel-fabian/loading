@@ -18,6 +18,7 @@ export default class SceneMenu extends Phaser.Scene {
   preload(): void {}
 
   create(): void {
+    this.add.image(0, 0, TEXTURES.MENU_BG).setOrigin(0, 0).setScale(8);
     const screenCenterX = this.scale.width / 2;
     this.add
       .text(screenCenterX, 80, 'Loading...', {
