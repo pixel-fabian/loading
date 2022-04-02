@@ -1,7 +1,7 @@
 import TEXTURES from '../constants/TextureKeys';
 
 export default class Parcels extends Phaser.Physics.Arcade.Group {
-  private velocity: 20;
+  private velocity = 50;
   private textures?: Array<string>;
 
   constructor(world: Phaser.Physics.Arcade.World, scene: Phaser.Scene) {
@@ -11,12 +11,15 @@ export default class Parcels extends Phaser.Physics.Arcade.Group {
 
   spawn() {
     const parcel: Phaser.Physics.Arcade.Sprite = this.create(
-      100,
-      400,
+      -20,
+      this.getRandomY(),
       TEXTURES.PARCEL,
     );
-    parcel.setCollideWorldBounds(true);
     parcel.setScale(3);
-    parcel.setVelocityX(50);
+    parcel.setVelocityX(this.velocity);
+  }
+
+  getRandomY() {
+    return Phaser.Math.Between(0, this.scene.scale.height);
   }
 }

@@ -45,6 +45,13 @@ export default class SceneGame extends Phaser.Scene {
     //this.player.play(TEXTURES.PLAYER);
 
     this.bullets = new Bullets(this);
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.parcels.spawn();
+      },
+      loop: true,
+    });
   }
 
   update(): void {
