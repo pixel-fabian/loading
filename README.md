@@ -16,7 +16,7 @@ Build with [phaser 3](https://phaser.io/)
 
 ### Code
 
-Are you? - A browser game -
+Loading... - A browser game -
 Copyright (C) 2022 pixel-fabian & lupercalia
 
 This program is free software: you can redistribute it and/or modify

@@ -11,8 +11,17 @@ const config: Phaser.Types.Core.GameConfig = {
   parent: 'game',
   scene: [SceneLoad, SceneMenu, SceneGame],
   render: {
-    pixelArt: true
-  }
+    pixelArt: true,
+  },
+  physics: {
+    default: 'arcade',
+    arcade: {
+      debug: false,
+      gravity: {
+        y: 0,
+      },
+    },
+  },
 };
 
 window.onload = () => {
