@@ -2,7 +2,12 @@ import TEXTURES from '../constants/TextureKeys';
 
 export default class Parcels extends Phaser.Physics.Arcade.Group {
   private velocity = 100;
-  private textures?: Array<string>;
+  private textures = [
+    TEXTURES.PARCEL,
+    TEXTURES.PARCEL_AGGRO,
+    TEXTURES.PARCEL_DANGER,
+    TEXTURES.PARCEL_SPECIAL,
+  ];
 
   constructor(world: Phaser.Physics.Arcade.World, scene: Phaser.Scene) {
     super(world, scene);
@@ -10,13 +15,16 @@ export default class Parcels extends Phaser.Physics.Arcade.Group {
   }
 
   spawn() {
+    const texture = this.textures[Phaser.Math.Between(0, 3)];
     const parcel: Phaser.Physics.Arcade.Sprite = this.create(
       -20,
       this._getRandomY(),
-      TEXTURES.PARCEL,
+      texture,
     );
     parcel.setScale(3);
-    parcel.setVelocityX(this.velocity);
+    parcel.setVelocityX(
+      Phaser.Math.Between(this.velocity - 20, this.velocity + 20),
+    );
   }
 
   reachedGoal() {
