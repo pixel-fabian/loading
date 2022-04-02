@@ -4,6 +4,7 @@ import TEXTURES from '../constants/TextureKeys';
 import LoadingBar from '../objects/loadingBar';
 import Parcels from '../objects/parcels';
 import Player from '../objects/player';
+import Bullets from '../objects/bullets';
 
 export default class SceneGame extends Phaser.Scene {
   private keyW: Phaser.Input.Keyboard.Key;
@@ -15,6 +16,7 @@ export default class SceneGame extends Phaser.Scene {
   private loadingBar: LoadingBar;
   private parcels: Parcels;
   private player: Player;
+  private bullets: Bullets;
 
   constructor() {
     super({
@@ -39,11 +41,17 @@ export default class SceneGame extends Phaser.Scene {
     this.player = new Player(this, 700, 100, TEXTURES.PLAYER, 0);
     this.player.setScale(2.5);
     //this.player.play(TEXTURES.PLAYER);
+
+    this.bullets = new Bullets(this);
   }
 
   update(): void {
     this._movePlayer();
     //this.loadingBar.addProgress(0.01);
+
+    if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
+      this.bullets.fireBullet(this.player.x, this.player.y);
+    }
   }
 
   //////////////////////////////////////////////////
