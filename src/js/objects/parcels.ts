@@ -12,14 +12,26 @@ export default class Parcels extends Phaser.Physics.Arcade.Group {
   spawn() {
     const parcel: Phaser.Physics.Arcade.Sprite = this.create(
       -20,
-      this.getRandomY(),
+      this._getRandomY(),
       TEXTURES.PARCEL,
     );
     parcel.setScale(3);
     parcel.setVelocityX(this.velocity);
   }
 
-  getRandomY() {
+  reachedGoal() {
+    let collision = false;
+    this.getChildren().forEach((parcel: Phaser.Physics.Arcade.Sprite) => {
+      if (parcel.active && parcel.x > this.scene.scale.width) {
+        parcel.destroy();
+        collision = true;
+      }
+    });
+
+    return collision;
+  }
+
+  _getRandomY() {
     return Phaser.Math.Between(0, this.scene.scale.height);
   }
 }

@@ -52,20 +52,44 @@ export default class SceneGame extends Phaser.Scene {
       },
       loop: true,
     });
+    this._addCollider();
   }
 
   update(): void {
     this._movePlayer();
-    //this.loadingBar.addProgress(0.01);
 
     if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
       this.bullets.fireBullet(this.player.x, this.player.y);
+    }
+    if (this.parcels.reachedGoal()) {
+      this.loadingBar.addProgress(0.01);
     }
   }
 
   //////////////////////////////////////////////////
   // Private methods                              //
   //////////////////////////////////////////////////
+
+  _addCollider() {
+    this.physics.add.collider(
+      this.bullets,
+      this.parcels,
+      this._onCollisionBulletParcel,
+      null,
+      this,
+    );
+  }
+
+  _onCollisionBulletParcel(
+    bullet: Phaser.Physics.Arcade.Sprite,
+    parcel: Phaser.Physics.Arcade.Sprite,
+  ) {
+    if (bullet.active && parcel.active) {
+      bullet.setActive(false);
+      bullet.setVisible(false);
+      parcel.destroy();
+    }
+  }
 
   _createControls() {
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
