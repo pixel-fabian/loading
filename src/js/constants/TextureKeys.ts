@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 enum TEXTURES {
-  PLACEHOLDER = 'placeholder',
+  PARCEL = 'parcel',
 }
 
 export default TEXTURES;
