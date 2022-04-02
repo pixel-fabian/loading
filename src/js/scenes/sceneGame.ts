@@ -37,6 +37,7 @@ export default class SceneGame extends Phaser.Scene {
     this.parcels.spawn();
 
     this.player = new Player(this, 700, 100, TEXTURES.PLAYER, 0);
+    this.player.setScale(2.5);
     //this.player.play(TEXTURES.PLAYER);
   }
 

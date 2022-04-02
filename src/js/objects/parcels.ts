@@ -16,6 +16,7 @@ export default class Parcels extends Phaser.Physics.Arcade.Group {
       TEXTURES.PARCEL,
     );
     parcel.setCollideWorldBounds(true);
+    parcel.setScale(2.5);
     parcel.setVelocityX(40);
   }
 }

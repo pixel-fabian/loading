@@ -31,13 +31,37 @@ export default class SceneLoad extends Phaser.Scene {
     });
 
     // load all textures
-    this.load.spritesheet(TEXTURES.PARCEL, 'assets/sprites/placeholder.png', {
-      frameWidth: 32,
-      frameHeight: 32,
+    this.load.spritesheet(TEXTURES.PARCEL, 'assets/sprites/parcel_normal.png', {
+      frameWidth: 16,
+      frameHeight: 16,
     });
-    this.load.spritesheet(TEXTURES.PLAYER, 'assets/sprites/placeholder.png', {
-      frameWidth: 32,
-      frameHeight: 32,
+    this.load.spritesheet(
+      TEXTURES.PARCEL_AGGRO,
+      'assets/sprites/parcel_aggro.png',
+      {
+        frameWidth: 16,
+        frameHeight: 16,
+      },
+    );
+    this.load.spritesheet(
+      TEXTURES.PARCEL_DANGER,
+      'assets/sprites/parcel_danger.png',
+      {
+        frameWidth: 16,
+        frameHeight: 16,
+      },
+    );
+    this.load.spritesheet(
+      TEXTURES.PARCEL_SPECIAL,
+      'assets/sprites/parcel_special.png',
+      {
+        frameWidth: 16,
+        frameHeight: 16,
+      },
+    );
+    this.load.spritesheet(TEXTURES.PLAYER, 'assets/sprites/gnome.png', {
+      frameWidth: 16,
+      frameHeight: 16,
     });
   }
 
