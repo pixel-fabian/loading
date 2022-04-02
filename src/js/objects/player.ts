@@ -1,5 +1,3 @@
-import TEXTURES from '../constants/TextureKeys';
-
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(
     scene: Phaser.Scene,

@@ -33,13 +33,15 @@ export default class SceneGame extends Phaser.Scene {
   preload(): void {}
 
   create(): void {
+    const camera = this.cameras.add(0, 0, 800, 600);
+    camera.setBackgroundColor('rgba(163, 208, 202, 1)');
     this._createControls();
     this.loadingBar = new LoadingBar(this);
     this.parcels = new Parcels(this.physics.world, this);
     this.parcels.spawn();
 
     this.player = new Player(this, 700, 100, TEXTURES.PLAYER, 0);
-    this.player.setScale(2.5);
+    this.player.setScale(3);
     //this.player.play(TEXTURES.PLAYER);
 
     this.bullets = new Bullets(this);
@@ -74,17 +76,17 @@ export default class SceneGame extends Phaser.Scene {
     const playerDirection = new Phaser.Math.Vector2(0, 0);
     if (this.keyA.isDown) {
       playerDirection.x -= 1;
-      this.player.flipX = true;
+      this.player.flipX = false;
     } else if (this.keyD.isDown) {
       playerDirection.x += 1;
-      this.player.flipX = false;
+      this.player.flipX = true;
     }
     if (this.keyW.isDown) {
       playerDirection.y -= 1;
     } else if (this.keyS.isDown) {
       playerDirection.y += 1;
     }
-    playerDirection.setLength(70);
+    playerDirection.setLength(100);
     this.player.setVelocity(playerDirection.x, playerDirection.y);
   }
 }
