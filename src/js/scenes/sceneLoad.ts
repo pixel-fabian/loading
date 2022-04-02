@@ -1,6 +1,8 @@
 import 'phaser';
 import SCENES from '../constants/SceneKeys';
 import TEXTURES from '../constants/TextureKeys';
+import AUDIO from '../constants/AudioKeys';
+
 export default class SceneLoad extends Phaser.Scene {
   constructor() {
     super({
@@ -74,6 +76,13 @@ export default class SceneLoad extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16,
     });
+    // load audio
+    this.load.audio(AUDIO.EXPLODE, ['assets/sounds/parcel_explode.wav']);
+    this.load.audio(AUDIO.PARCEL_1, ['assets/sounds/parcel1.wav']);
+    this.load.audio(AUDIO.PARCEL_2, ['assets/sounds/parcel2.wav']);
+    this.load.audio(AUDIO.PARCEL_3, ['assets/sounds/parcel3.wav']);
+    this.load.audio(AUDIO.PARCEL_4, ['assets/sounds/parcel4.wav']);
+    this.load.audio(AUDIO.SHOOT, ['assets/sounds/bass_shot.wav']);
   }
 
   create(): void {

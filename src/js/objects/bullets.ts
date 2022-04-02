@@ -15,21 +15,24 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
     });
   }
 
-  fireBullet(x, y) {
+  fireBullet(x: number, y: number) {
+    let fired = false;
     // Get the first available sprite in the group
     const bullet = this.getFirstDead(false);
     if (bullet) {
       bullet.fire(x, y);
+      fired = true;
     }
+    return fired;
   }
 }
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y) {
+  constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, TEXTURES.BULLET);
   }
 
-  fire(x, y) {
+  fire(x: number, y: number) {
     this.body.reset(x, y);
 
     this.setActive(true);

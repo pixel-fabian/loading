@@ -1,6 +1,7 @@
 import 'phaser';
 import SCENES from '../constants/SceneKeys';
 import TEXTURES from '../constants/TextureKeys';
+import AUDIO from '../constants/AudioKeys';
 import LoadingBar from '../objects/loadingBar';
 import Parcels from '../objects/parcels';
 import Player from '../objects/player';
@@ -18,6 +19,9 @@ export default class SceneGame extends Phaser.Scene {
   private parcels: Parcels;
   private player: Player;
   private bullets: Bullets;
+  private soundExplode?: Phaser.Sound.BaseSound;
+  private soundsParcel;
+  public soundShoot?: Phaser.Sound.BaseSound;
 
   constructor() {
     super({
@@ -66,16 +70,29 @@ export default class SceneGame extends Phaser.Scene {
       loop: true,
     });
     this._addCollider();
+    this.soundExplode = this.sound.add(AUDIO.EXPLODE);
+    this.soundsParcel = [
+      this.sound.add(AUDIO.PARCEL_1),
+      this.sound.add(AUDIO.PARCEL_2),
+      this.sound.add(AUDIO.PARCEL_3),
+      this.sound.add(AUDIO.PARCEL_4),
+    ];
+    this.soundShoot = this.sound.add(AUDIO.SHOOT);
   }
 
   update(): void {
     this._movePlayer();
 
     if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
-      this.bullets.fireBullet(this.player.x, this.player.y);
+      if (this.bullets.fireBullet(this.player.x, this.player.y)) {
+        this.soundShoot.play();
+      }
     }
     if (this.parcels.reachedGoal()) {
       this.loadingBar.addProgress(0.01);
+      this.soundsParcel[
+        Phaser.Math.Between(0, this.soundsParcel.length - 1)
+      ].play();
     }
   }
 
@@ -98,6 +115,7 @@ export default class SceneGame extends Phaser.Scene {
     parcel: Phaser.Physics.Arcade.Sprite,
   ) {
     if (bullet.active && parcel.active) {
+      this.soundExplode.play();
       bullet.setActive(false);
       bullet.setVisible(false);
       parcel.destroy();
