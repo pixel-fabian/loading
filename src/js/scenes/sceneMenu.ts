@@ -1,6 +1,7 @@
 import 'phaser';
 import SCENES from '../constants/SceneKeys';
 import TEXTURES from '../constants/TextureKeys';
+import Button from '../objects/button';
 
 export default class SceneMenu extends Phaser.Scene {
   private background: Phaser.GameObjects.Image;
@@ -121,7 +122,9 @@ export default class SceneMenu extends Phaser.Scene {
     sText: string,
     sStartScene?: SCENES,
   ) {
-    const button = this.add.sprite(nX, nY, sTextureKey, 0).setOrigin(0.5);
+    const button = new Button(this, nX, nY, sTextureKey, sText, 0).setOrigin(
+      0.5,
+    );
     button.setScale(4);
 
     if (sStartScene) {
@@ -142,14 +145,6 @@ export default class SceneMenu extends Phaser.Scene {
       });
     }
 
-    this.add
-      .text(nX, nY + 32, sText, {
-        fontFamily: 'BitPotion',
-        color: '#000',
-        fontSize: '32px',
-      })
-      .setOrigin(0.5);
-
     return button;
   }
 
@@ -164,8 +159,9 @@ export default class SceneMenu extends Phaser.Scene {
         this.buttonTrash,
         this.buttonCredits,
       ];
-      buttons.forEach((target) => {
-        target.setVisible(false);
+      buttons.forEach((button) => {
+        button.setVisible(false);
+        button.text.setVisible(false);
       });
       // Loading Text
       this.tweens.add({
