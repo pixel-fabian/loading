@@ -9,6 +9,7 @@ import Parcel from '../objects/parcel';
 import Player from '../objects/player';
 import Gnomes from '../objects/gnomes';
 import Bullets from '../objects/bullets';
+import SaveGame from '../objects/saveGame';
 
 export default class SceneGame extends Phaser.Scene {
   private keyW: Phaser.Input.Keyboard.Key;
@@ -34,6 +35,7 @@ export default class SceneGame extends Phaser.Scene {
   private spawnParcelTimer: Phaser.Time.TimerEvent;
   private spawnGnomeTimer: Phaser.Time.TimerEvent;
   private music_loop;
+  private saveGame: SaveGame;
 
   constructor() {
     super({
@@ -45,7 +47,9 @@ export default class SceneGame extends Phaser.Scene {
   // LIFECYCLE (init, preload, create, update)    //
   //////////////////////////////////////////////////
 
-  init(): void {}
+  init(): void {
+    this.saveGame = new SaveGame();
+  }
 
   preload(): void {}
 
@@ -401,6 +405,7 @@ export default class SceneGame extends Phaser.Scene {
   _gameOver() {
     this.scene.pause();
     this.music_loop.stop();
+    this.saveGame.addItem(this.score);
     this.scene.start(SCENES.GAMEOVER, { score: this.score });
   }
 }
