@@ -24,6 +24,7 @@ export default class SceneGame extends Phaser.Scene {
   public soundShoot?: Phaser.Sound.BaseSound;
   private score = 0;
   private scoreText: Phaser.GameObjects.Text;
+  private spawnTimer: Phaser.Time.TimerEvent;
 
   constructor() {
     super({
@@ -64,13 +65,19 @@ export default class SceneGame extends Phaser.Scene {
     //this.player.play(TEXTURES.PLAYER);
 
     this.bullets = new Bullets(this);
+
+    this._addSpawnTimer(1000);
     this.time.addEvent({
-      delay: 1000,
+      delay: 3000,
       callback: () => {
-        this.parcels.spawn();
+        // reduce spawn delay over time
+        const delay =
+          this.spawnTimer.delay + 0.1 * (100 - this.spawnTimer.delay);
+        this._addSpawnTimer(delay);
       },
       loop: true,
     });
+
     this._addCollider();
 
     // sound
@@ -84,7 +91,7 @@ export default class SceneGame extends Phaser.Scene {
     this.soundShoot = this.sound.add(AUDIO.SHOOT);
 
     // text
-    this.scoreText = this.add.text(400, 42, `${this.score}`, {
+    this.scoreText = this.add.text(400, 43, `${this.score}`, {
       fontFamily: 'BitPotion',
       fontSize: '35px',
       color: '0x222222',
@@ -113,6 +120,19 @@ export default class SceneGame extends Phaser.Scene {
   //////////////////////////////////////////////////
   // Private methods                              //
   //////////////////////////////////////////////////
+
+  _addSpawnTimer(delay) {
+    if (this.spawnTimer) {
+      this.spawnTimer.destroy();
+    }
+    this.spawnTimer = this.time.addEvent({
+      delay: delay,
+      callback: () => {
+        this.parcels.spawn();
+      },
+      loop: true,
+    });
+  }
 
   _addCollider() {
     this.physics.add.collider(
