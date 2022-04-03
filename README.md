@@ -57,3 +57,4 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 ### Assets
 
 - Sprites and sound effects: pixel-fabian & lupercalia CC-BY-SA 4.0
+- Font: BitPotion by Joeb Rogers (CC-BY)
