@@ -41,6 +41,32 @@ export default class SceneLoad extends Phaser.Scene {
       'assets/sprites/human_smile_wink.png',
     );
     this.load.image(TEXTURES.MENU_BG, 'assets/sprites/menu.png');
+
+    this.load.spritesheet(TEXTURES.ICON_DIR, 'assets/sprites/icon_dir.png', {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet(TEXTURES.ICON_EXE, 'assets/sprites/icon_exe.png', {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet(TEXTURES.ICON_FILE, 'assets/sprites/icon_file.png', {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet(
+      TEXTURES.ICON_TRASH,
+      'assets/sprites/icon_trash.png',
+      {
+        frameWidth: 16,
+        frameHeight: 16,
+      },
+    );
+    this.load.spritesheet(TEXTURES.ICON_TXT, 'assets/sprites/icon_txt.png', {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+
     this.load.spritesheet(TEXTURES.BULLET, 'assets/sprites/bullet.png', {
       frameWidth: 16,
       frameHeight: 16,
