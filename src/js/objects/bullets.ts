@@ -1,8 +1,6 @@
 import TEXTURES from '../constants/TextureKeys';
 
 export default class Bullets extends Phaser.Physics.Arcade.Group {
-  private velocity: 20;
-
   constructor(scene: Phaser.Scene) {
     super(scene.physics.world, scene);
 
@@ -39,9 +37,9 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.setVisible(true);
 
     if (shootLeft) {
-      this.setVelocityX(-300);
+      this.setVelocityX(-450);
     } else {
-      this.setVelocityX(300);
+      this.setVelocityX(450);
     }
   }
 
