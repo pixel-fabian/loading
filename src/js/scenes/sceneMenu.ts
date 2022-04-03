@@ -60,6 +60,7 @@ export default class SceneMenu extends Phaser.Scene {
       230,
       TEXTURES.ICON_TXT,
       'highscore.txt',
+      SCENES.HIGHSCORE,
     );
     this.buttonGameJam = this._createButton(
       200,
@@ -78,6 +79,7 @@ export default class SceneMenu extends Phaser.Scene {
       420,
       TEXTURES.ICON_TXT,
       'credits.txt',
+      SCENES.CREDITS,
     );
   }
 

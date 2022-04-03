@@ -27,7 +27,7 @@ export default class LoadingBar {
 
   checkFull() {
     let full = false;
-    if (this.width === this.targetWidth) {
+    if (this.width <= this.targetWidth) {
       full = true;
     }
     return full;

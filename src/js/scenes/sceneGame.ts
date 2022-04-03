@@ -105,7 +105,6 @@ export default class SceneGame extends Phaser.Scene {
 
     if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
       const shootLeft = this.player.flipX ? false : true;
-      console.log('shootLeft', shootLeft);
 
       if (
         this.bullets.fireBullet(this.player.x, this.player.y + 10, shootLeft)
@@ -122,6 +121,10 @@ export default class SceneGame extends Phaser.Scene {
     }
     // update score
     this._updateScore(1);
+    // game over
+    if (this.loadingBar.checkFull()) {
+      this._gameOver();
+    }
   }
 
   //////////////////////////////////////////////////
@@ -222,5 +225,10 @@ export default class SceneGame extends Phaser.Scene {
   _updateScore(amount: number) {
     this.score = this.score + amount;
     this.scoreText.setText(`${this.score}`);
+  }
+
+  _gameOver() {
+    this.scene.pause();
+    this.scene.start(SCENES.GAMEOVER);
   }
 }
