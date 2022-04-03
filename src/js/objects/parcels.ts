@@ -22,6 +22,17 @@ export default class Parcels extends Phaser.Physics.Arcade.Group {
       texture,
     );
     parcel.setScale(3);
+    switch (texture) {
+      case TEXTURES.PARCEL:
+      case TEXTURES.PARCEL_SPECIAL:
+        parcel.body.setSize(10, 10);
+        break;
+      case TEXTURES.PARCEL_AGGRO:
+      case TEXTURES.PARCEL_DANGER:
+        parcel.body.setSize(8, 8);
+        break;
+    }
+
     parcel.setVelocityX(
       Phaser.Math.Between(this.velocity - 20, this.velocity + 20),
     );

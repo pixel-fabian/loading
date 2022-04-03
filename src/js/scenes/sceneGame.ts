@@ -57,7 +57,7 @@ export default class SceneGame extends Phaser.Scene {
     this.parcels = new Parcels(this.physics.world, this);
     this.parcels.spawn();
 
-    this.player = new Player(this, 700, 100, TEXTURES.PLAYER, 0);
+    this.player = new Player(this, 700, 100, TEXTURES.PLAYER, 8);
     this.player.setScale(3);
     //this.player.play(TEXTURES.PLAYER);
 
@@ -84,8 +84,9 @@ export default class SceneGame extends Phaser.Scene {
     this._movePlayer();
 
     if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
-      if (this.bullets.fireBullet(this.player.x, this.player.y)) {
+      if (this.bullets.fireBullet(this.player.x, this.player.y + 10)) {
         this.soundShoot.play();
+        this.player.x = this.player.x + 5;
       }
     }
     if (this.parcels.reachedGoal()) {
@@ -118,6 +119,9 @@ export default class SceneGame extends Phaser.Scene {
       this.soundExplode.play();
       bullet.setActive(false);
       bullet.setVisible(false);
+      bullet.body.enable = false;
+      console.log(bullet);
+
       parcel.destroy();
     }
   }
