@@ -13,8 +13,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
       visible: false,
       classType: Bullet,
     });
-
-    this.kil;
   }
 
   fireBullet(x: number, y: number) {

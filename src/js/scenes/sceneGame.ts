@@ -120,7 +120,6 @@ export default class SceneGame extends Phaser.Scene {
       bullet.setActive(false);
       bullet.setVisible(false);
       bullet.body.enable = false;
-      console.log(bullet);
 
       parcel.destroy();
     }
