@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 enum AUDIO {
+  GNOME_MAGE_HIT = 'gnome_mage_hit',
   SHOOT = 'shoot',
   EXPLODE = 'explode',
   PARCEL_1 = 'parcel_1',

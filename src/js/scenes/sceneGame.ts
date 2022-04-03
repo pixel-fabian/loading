@@ -7,6 +7,7 @@ import LoadingBar from '../objects/loadingBar';
 import Parcels from '../objects/parcels';
 import Parcel from '../objects/parcel';
 import Player from '../objects/player';
+import Gnomes from '../objects/gnomes';
 import Bullets from '../objects/bullets';
 
 export default class SceneGame extends Phaser.Scene {
@@ -20,13 +21,16 @@ export default class SceneGame extends Phaser.Scene {
   private loadingBar: LoadingBar;
   private parcels: Parcels;
   private player: Player;
+  private gnomes: Gnomes;
   private bullets: Bullets;
   private soundExplode?: Phaser.Sound.BaseSound;
   private soundsParcel?;
   public soundShoot?: Phaser.Sound.BaseSound;
+  private soundGnomeMageHit?: Phaser.Sound.BaseSound;
   private score;
   private scoreText: Phaser.GameObjects.Text;
-  private spawnTimer: Phaser.Time.TimerEvent;
+  private spawnParcelTimer: Phaser.Time.TimerEvent;
+  private spawnGnomeTimer: Phaser.Time.TimerEvent;
   private music_loop;
 
   constructor() {
@@ -74,6 +78,7 @@ export default class SceneGame extends Phaser.Scene {
     this.loadingBar = new LoadingBar(this);
     this.parcels = new Parcels(this.physics.world, this);
     this.parcels.spawn();
+    this.gnomes = new Gnomes(this.physics.world, this);
 
     this.player = new Player(this, 700, 100, TEXTURES.PLAYER, 8);
     this.player.setScale(3);
@@ -81,17 +86,19 @@ export default class SceneGame extends Phaser.Scene {
 
     this.bullets = new Bullets(this);
 
-    this._addSpawnTimer(1000);
+    this._addSpawnParcelTimer(1000);
     this.time.addEvent({
       delay: 3000,
       callback: () => {
         // reduce spawn delay over time
         const delay =
-          this.spawnTimer.delay + 0.1 * (100 - this.spawnTimer.delay);
-        this._addSpawnTimer(delay);
+          this.spawnParcelTimer.delay +
+          0.1 * (100 - this.spawnParcelTimer.delay);
+        this._addSpawnParcelTimer(delay);
       },
       loop: true,
     });
+    this._addSpawnGnomeTimer(3000);
 
     this._addCollider();
 
@@ -104,6 +111,7 @@ export default class SceneGame extends Phaser.Scene {
       this.sound.add(AUDIO.PARCEL_4),
     ];
     this.soundShoot = this.sound.add(AUDIO.SHOOT);
+    this.soundGnomeMageHit = this.sound.add(AUDIO.GNOME_MAGE_HIT);
 
     // text
     this.scoreText = this.add.text(400, 43, `${this.score}`, {
@@ -144,14 +152,27 @@ export default class SceneGame extends Phaser.Scene {
   // Private methods                              //
   //////////////////////////////////////////////////
 
-  _addSpawnTimer(delay) {
-    if (this.spawnTimer) {
-      this.spawnTimer.destroy();
+  _addSpawnParcelTimer(delay) {
+    if (this.spawnParcelTimer) {
+      this.spawnParcelTimer.destroy();
     }
-    this.spawnTimer = this.time.addEvent({
+    this.spawnParcelTimer = this.time.addEvent({
       delay: delay,
       callback: () => {
         this.parcels.spawn();
+      },
+      loop: true,
+    });
+  }
+
+  _addSpawnGnomeTimer(delay) {
+    if (this.spawnGnomeTimer) {
+      this.spawnGnomeTimer.destroy();
+    }
+    this.spawnGnomeTimer = this.time.addEvent({
+      delay: delay,
+      callback: () => {
+        this.gnomes.spawn();
       },
       loop: true,
     });
@@ -169,6 +190,13 @@ export default class SceneGame extends Phaser.Scene {
       this.parcels,
       this.parcels,
       this._onCollisionParcelParcel,
+      null,
+      this,
+    );
+    this.physics.add.collider(
+      this.bullets,
+      this.gnomes,
+      this._onCollisionBulletGnome,
       null,
       this,
     );
@@ -191,18 +219,36 @@ export default class SceneGame extends Phaser.Scene {
 
   _onCollisionParcelParcel(parcel1: Parcel, parcel2: Parcel) {
     if (parcel1.active && parcel2.active) {
-      if (parcel1.body.velocity.x <= 0 && parcel2.anims.isPlaying == false) {
+      if (parcel2.anims.isPlaying == false) {
         this.soundExplode.play();
         this._parcelExplode(parcel2);
         this._updateScore(50);
-      } else if (
-        parcel2.body.velocity.x <= 0 &&
-        parcel1.anims.isPlaying == false
-      ) {
+      } else if (parcel1.anims.isPlaying == false) {
         this.soundExplode.play();
         this._parcelExplode(parcel1);
         this._updateScore(50);
       }
+    }
+  }
+
+  _onCollisionBulletGnome(
+    bullet: Phaser.Physics.Arcade.Sprite,
+    gnome: Phaser.Physics.Arcade.Sprite,
+  ) {
+    if (bullet.active && gnome.active) {
+      this.soundGnomeMageHit.play();
+      bullet.setActive(false);
+      bullet.setVisible(false);
+      bullet.body.enable = false;
+
+      this.loadingBar.addProgress(0.05);
+      this._updateScore(-100);
+
+      gnome.setVelocity(0);
+      gnome.play(ANIMATIONS.GNOME_DIE);
+      gnome.on('animationcomplete', () => {
+        gnome.destroy();
+      });
     }
   }
 
@@ -236,6 +282,24 @@ export default class SceneGame extends Phaser.Scene {
       }),
       frameRate: 5,
       repeat: -1, // -1: infinity
+    });
+    this.anims.create({
+      key: ANIMATIONS.GNOME_WALK,
+      frames: this.anims.generateFrameNumbers(TEXTURES.GNOME_MAGE, {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 5,
+      repeat: -1, // -1: infinity
+    });
+    this.anims.create({
+      key: ANIMATIONS.GNOME_DIE,
+      frames: this.anims.generateFrameNumbers(TEXTURES.GNOME_MAGE, {
+        start: 3,
+        end: 11,
+      }),
+      frameRate: 8,
+      repeat: 0, // -1: infinity
     });
     this.anims.create({
       key: ANIMATIONS.PARCEL_EXPLODE,

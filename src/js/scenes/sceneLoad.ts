@@ -42,6 +42,14 @@ export default class SceneLoad extends Phaser.Scene {
     );
     this.load.image(TEXTURES.MENU_BG, 'assets/sprites/menu.png');
 
+    this.load.spritesheet(
+      TEXTURES.GNOME_MAGE,
+      'assets/sprites/gnome_mage.png',
+      {
+        frameWidth: 16,
+        frameHeight: 16,
+      },
+    );
     this.load.spritesheet(TEXTURES.ICON_DIR, 'assets/sprites/icon_dir.png', {
       frameWidth: 16,
       frameHeight: 16,
@@ -104,6 +112,7 @@ export default class SceneLoad extends Phaser.Scene {
       frameHeight: 16,
     });
     // load audio
+    this.load.audio(AUDIO.GNOME_MAGE_HIT, ['assets/sounds/gnome_mage_hit.wav']);
     this.load.audio(AUDIO.EXPLODE, ['assets/sounds/parcel_explode.wav']);
     this.load.audio(AUDIO.PARCEL_1, ['assets/sounds/parcel1.wav']);
     this.load.audio(AUDIO.PARCEL_2, ['assets/sounds/parcel2.wav']);

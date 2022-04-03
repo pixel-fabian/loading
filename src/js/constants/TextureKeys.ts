@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 enum TEXTURES {
   BULLET = 'bullet',
+  GNOME_MAGE = 'gnome_mage',
   HUMAN = 'human',
   HUMAN_WINK = 'human_wink',
   HUMAN_SMILE = 'human_smile',
