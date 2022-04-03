@@ -27,6 +27,7 @@ export default class SceneGame extends Phaser.Scene {
   private soundExplode?: Phaser.Sound.BaseSound;
   private soundsParcel?;
   public soundShoot?: Phaser.Sound.BaseSound;
+  private soundGunEmpty?: Phaser.Sound.BaseSound;
   private soundGnomeMageHit?: Phaser.Sound.BaseSound;
   private score;
   private scoreText: Phaser.GameObjects.Text;
@@ -112,6 +113,7 @@ export default class SceneGame extends Phaser.Scene {
       this.sound.add(AUDIO.PARCEL_4),
     ];
     this.soundShoot = this.sound.add(AUDIO.SHOOT);
+    this.soundGunEmpty = this.sound.add(AUDIO.GUN_EMPTY);
     this.soundGnomeMageHit = this.sound.add(AUDIO.GNOME_MAGE_HIT);
 
     // text
@@ -125,7 +127,10 @@ export default class SceneGame extends Phaser.Scene {
   update(): void {
     this._movePlayer();
 
-    if (Phaser.Input.Keyboard.JustDown(this.keyE) || (Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+    if (
+      Phaser.Input.Keyboard.JustDown(this.keyE) ||
+      Phaser.Input.Keyboard.JustDown(this.keyQ)
+    ) {
       const shootLeft = this.player.flipX ? false : true;
 
       if (
@@ -133,8 +138,11 @@ export default class SceneGame extends Phaser.Scene {
       ) {
         this.soundShoot.play();
         this.player.x = shootLeft ? this.player.x + 5 : this.player.x - 5;
+      } else {
+        this.soundGunEmpty.play();
       }
     }
+
     if (this.parcels.reachedGoal()) {
       this.loadingBar.addProgress(0.01);
       this.soundsParcel[

@@ -2,6 +2,7 @@
 enum AUDIO {
   GNOME_MAGE_HIT = 'gnome_mage_hit',
   SHOOT = 'shoot',
+  GUN_EMPTY = 'gun_empty',
   EXPLODE = 'explode',
   PARCEL_1 = 'parcel_1',
   PARCEL_2 = 'parcel_2',

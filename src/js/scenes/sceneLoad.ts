@@ -113,6 +113,7 @@ export default class SceneLoad extends Phaser.Scene {
     });
     // load audio
     this.load.audio(AUDIO.GNOME_MAGE_HIT, ['assets/sounds/gnome_mage_hit.wav']);
+    this.load.audio(AUDIO.GUN_EMPTY, ['assets/sounds/gun_empty.wav']);
     this.load.audio(AUDIO.EXPLODE, ['assets/sounds/parcel_explode.wav']);
     this.load.audio(AUDIO.PARCEL_1, ['assets/sounds/parcel1.wav']);
     this.load.audio(AUDIO.PARCEL_2, ['assets/sounds/parcel2.wav']);
