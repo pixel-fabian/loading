@@ -1,6 +1,7 @@
 import 'phaser';
 import SCENES from '../constants/SceneKeys';
 import TEXTURES from '../constants/TextureKeys';
+import ANIMATIONS from '../constants/AnimationKeys';
 import AUDIO from '../constants/AudioKeys';
 import LoadingBar from '../objects/loadingBar';
 import Parcels from '../objects/parcels';
@@ -56,13 +57,14 @@ export default class SceneGame extends Phaser.Scene {
       loop: true,
     });
     this._createControls();
+    this._createAnimations();
     this.loadingBar = new LoadingBar(this);
     this.parcels = new Parcels(this.physics.world, this);
     this.parcels.spawn();
 
     this.player = new Player(this, 700, 100, TEXTURES.PLAYER, 8);
     this.player.setScale(3);
-    //this.player.play(TEXTURES.PLAYER);
+    this.player.play(ANIMATIONS.PLAYER_WALK);
 
     this.bullets = new Bullets(this);
 
@@ -157,6 +159,18 @@ export default class SceneGame extends Phaser.Scene {
       parcel.destroy();
       this._updateScore(50);
     }
+  }
+
+  _createAnimations() {
+    this.anims.create({
+      key: ANIMATIONS.PLAYER_WALK,
+      frames: this.anims.generateFrameNumbers(TEXTURES.PLAYER, {
+        start: 8,
+        end: 9,
+      }),
+      frameRate: 5,
+      repeat: -1, // -1: infinity
+    });
   }
 
   _createControls() {
