@@ -26,6 +26,7 @@ export default class SceneGame extends Phaser.Scene {
   private score;
   private scoreText: Phaser.GameObjects.Text;
   private spawnTimer: Phaser.Time.TimerEvent;
+  private music_loop;
 
   constructor() {
     super({
@@ -42,8 +43,10 @@ export default class SceneGame extends Phaser.Scene {
   preload(): void {}
 
   create(): void {
+    // reset data
     this.score = 0;
     const camera = this.cameras.add(0, 0, 800, 600);
+    // background
     camera.setBackgroundColor('rgba(103, 130, 126, 1)');
     this.background = this.add
       .image(0, 0, TEXTURES.HUMAN)
@@ -57,6 +60,14 @@ export default class SceneGame extends Phaser.Scene {
       },
       loop: true,
     });
+    // music
+    const music_intro = this.sound.add(AUDIO.MUSIC_INTRO);
+    this.music_loop = this.sound.add(AUDIO.MUSIC_LOOP, { loop: true });
+    music_intro.play();
+    music_intro.on('complete', () => {
+      this.music_loop.play();
+    });
+
     this._createControls();
     this._createAnimations();
     this.loadingBar = new LoadingBar(this);
@@ -286,6 +297,7 @@ export default class SceneGame extends Phaser.Scene {
 
   _gameOver() {
     this.scene.pause();
+    this.music_loop.stop();
     this.scene.start(SCENES.GAMEOVER, { score: this.score });
   }
 }

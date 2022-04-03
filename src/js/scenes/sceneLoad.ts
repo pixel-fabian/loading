@@ -110,6 +110,8 @@ export default class SceneLoad extends Phaser.Scene {
     this.load.audio(AUDIO.PARCEL_3, ['assets/sounds/parcel3.wav']);
     this.load.audio(AUDIO.PARCEL_4, ['assets/sounds/parcel4.wav']);
     this.load.audio(AUDIO.SHOOT, ['assets/sounds/bass_shot.wav']);
+    this.load.audio(AUDIO.MUSIC_INTRO, ['assets/sounds/loading_intro.mp3']);
+    this.load.audio(AUDIO.MUSIC_LOOP, ['assets/sounds/loading_loop.mp3']);
   }
 
   create(): void {
