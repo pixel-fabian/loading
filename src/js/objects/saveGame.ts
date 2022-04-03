@@ -24,12 +24,20 @@ export default class SaveGame {
   }
 
   save() {
-    localStorage.setItem('highscores', JSON.stringify(this.aHighscores));
+    try {
+      localStorage.setItem('highscores', JSON.stringify(this.aHighscores));
+    } catch {
+      console.warn('Saving to local storage failed!');
+    }
   }
 
   load() {
-    if (JSON.parse(localStorage.getItem('highscores'))) {
-      this.aHighscores = JSON.parse(localStorage.getItem('highscores'));
+    try {
+      if (JSON.parse(localStorage.getItem('highscores'))) {
+        this.aHighscores = JSON.parse(localStorage.getItem('highscores'));
+      }
+    } catch {
+      console.warn('Loading from local storage failed!');
     }
   }
 }

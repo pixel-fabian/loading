@@ -20,7 +20,7 @@ export default class SceneCredits extends Phaser.Scene {
 
   create(): void {
     this.add.image(0, 0, TEXTURES.MENU_BG).setOrigin(0, 0).setScale(8);
-    new Window(this, 'Credits.txt', {}, SCENES.MENU);
+    new Window(this, 'credits.txt', {}, SCENES.MENU);
 
     // add text
     const screenCenterX = this.scale.width / 2;

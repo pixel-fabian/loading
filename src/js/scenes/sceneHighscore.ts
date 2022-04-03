@@ -25,7 +25,7 @@ export default class SceneHighscore extends Phaser.Scene {
 
   create(): void {
     this.add.image(0, 0, TEXTURES.MENU_BG).setOrigin(0, 0).setScale(8);
-    new Window(this, 'Highscore.txt', {}, SCENES.MENU);
+    new Window(this, 'highscore.txt', {}, SCENES.MENU);
 
     const screenCenterX = this.scale.width / 2;
     this.add
