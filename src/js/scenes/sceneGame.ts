@@ -20,8 +20,10 @@ export default class SceneGame extends Phaser.Scene {
   private player: Player;
   private bullets: Bullets;
   private soundExplode?: Phaser.Sound.BaseSound;
-  private soundsParcel;
+  private soundsParcel?;
   public soundShoot?: Phaser.Sound.BaseSound;
+  private score = 0;
+  private scoreText: Phaser.GameObjects.Text;
 
   constructor() {
     super({
@@ -70,6 +72,8 @@ export default class SceneGame extends Phaser.Scene {
       loop: true,
     });
     this._addCollider();
+
+    // sound
     this.soundExplode = this.sound.add(AUDIO.EXPLODE);
     this.soundsParcel = [
       this.sound.add(AUDIO.PARCEL_1),
@@ -78,6 +82,13 @@ export default class SceneGame extends Phaser.Scene {
       this.sound.add(AUDIO.PARCEL_4),
     ];
     this.soundShoot = this.sound.add(AUDIO.SHOOT);
+
+    // text
+    this.scoreText = this.add.text(400, 42, `${this.score}`, {
+      fontFamily: 'BitPotion',
+      fontSize: '35px',
+      color: '0x222222',
+    });
   }
 
   update(): void {
@@ -95,6 +106,8 @@ export default class SceneGame extends Phaser.Scene {
         Phaser.Math.Between(0, this.soundsParcel.length - 1)
       ].play();
     }
+    // update score
+    this._updateScore(1);
   }
 
   //////////////////////////////////////////////////
@@ -122,6 +135,7 @@ export default class SceneGame extends Phaser.Scene {
       bullet.body.enable = false;
 
       parcel.destroy();
+      this._updateScore(50);
     }
   }
 
@@ -164,5 +178,10 @@ export default class SceneGame extends Phaser.Scene {
       },
       loop: false,
     });
+  }
+
+  _updateScore(amount: number) {
+    this.score = this.score + amount;
+    this.scoreText.setText(`${this.score}`);
   }
 }
