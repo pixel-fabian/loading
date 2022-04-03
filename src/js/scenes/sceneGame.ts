@@ -104,9 +104,14 @@ export default class SceneGame extends Phaser.Scene {
     this._movePlayer();
 
     if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
-      if (this.bullets.fireBullet(this.player.x, this.player.y + 10)) {
+      const shootLeft = this.player.flipX ? false : true;
+      console.log('shootLeft', shootLeft);
+
+      if (
+        this.bullets.fireBullet(this.player.x, this.player.y + 10, shootLeft)
+      ) {
         this.soundShoot.play();
-        this.player.x = this.player.x + 5;
+        this.player.x = shootLeft ? this.player.x + 5 : this.player.x - 5;
       }
     }
     if (this.parcels.reachedGoal()) {
