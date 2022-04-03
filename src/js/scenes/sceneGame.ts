@@ -219,11 +219,14 @@ export default class SceneGame extends Phaser.Scene {
 
   _onCollisionParcelParcel(parcel1: Parcel, parcel2: Parcel) {
     if (parcel1.active && parcel2.active) {
-      if (parcel2.anims.isPlaying == false) {
+      if (parcel2.anims.isPlaying == false && parcel1.anims.isPlaying == true) {
         this.soundExplode.play();
         this._parcelExplode(parcel2);
         this._updateScore(50);
-      } else if (parcel1.anims.isPlaying == false) {
+      } else if (
+        parcel1.anims.isPlaying == false &&
+        parcel2.anims.isPlaying == true
+      ) {
         this.soundExplode.play();
         this._parcelExplode(parcel1);
         this._updateScore(50);
