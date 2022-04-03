@@ -6,11 +6,33 @@
 
 ---
 
+[![Loading title image](dist/assets/img/loading_banner.png)](https://pixel-fabian.itch.io/loading)
+
+It’s him again! In front of your home this human appears! And with him soon again this pesky progress bar!
+
+Fight the data packs with all you’ve got and prevent the loading bar reaching 100% AT ALL COST!
+
+(oh and look out for your fellow gnomes, they try to have a nice day, too)
+
 A game by: lupercalia & pixel-fabian
 
 Created during [Ludum Dare 50 GameJam](https://ldjam.com/events/ludum-dare/50)
 
 Build with [phaser 3](https://phaser.io/)
+
+## Play
+
+> Play on [itch.io](https://pixel-fabian.itch.io/loading)
+
+### Controls:
+
+- move: WASD or arrow keys
+- interact: E or Q
+
+## Edit or play localy
+
+1. Clone or download this repository
+2. Open `dist/index_standalone.html` with a webserver
 
 ## License
 
