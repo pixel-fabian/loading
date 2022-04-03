@@ -3,6 +3,15 @@ import SCENES from '../constants/SceneKeys';
 import TEXTURES from '../constants/TextureKeys';
 
 export default class SceneMenu extends Phaser.Scene {
+  private background: Phaser.GameObjects.Image;
+  private titleText;
+  private buttonGame;
+  private buttonGameBin;
+  private buttonHighscore;
+  private buttonGameJam;
+  private buttonTrash;
+  private buttonCredits;
+
   constructor() {
     super({
       key: SCENES.MENU,
@@ -18,23 +27,58 @@ export default class SceneMenu extends Phaser.Scene {
   preload(): void {}
 
   create(): void {
-    this.add.image(0, 0, TEXTURES.MENU_BG).setOrigin(0, 0).setScale(8);
     const screenCenterX = this.scale.width / 2;
-    this.add
+    const screenCenterY = this.scale.height / 2;
+    this.background = this.add
+      .image(screenCenterX, screenCenterY, TEXTURES.MENU_BG)
+      .setOrigin(0.5)
+      .setScale(8);
+
+    this.titleText = this.add
       .text(screenCenterX, 120, 'Loading...', {
         fontFamily: 'BitPotion',
         color: '#fff',
         fontSize: '92px',
       })
       .setOrigin(0.5);
-    this._createButton(220, 220, TEXTURES.ICON_EXE, 'game.exe', SCENES.GAME);
-    this._createButton(300, 230, TEXTURES.ICON_FILE, 'game.bin');
-    this._createButton(500, 230, TEXTURES.ICON_TXT, 'highscore.txt');
 
-    this._createButton(200, 350, TEXTURES.ICON_DIR, 'GameJam');
-
-    this._createButton(600, 420, TEXTURES.ICON_TRASH, 'Trash');
-    this._createButton(400, 420, TEXTURES.ICON_TXT, 'credits.txt');
+    this.buttonGame = this._createButton(
+      220,
+      220,
+      TEXTURES.ICON_EXE,
+      'game.exe',
+      SCENES.GAME,
+    );
+    this.buttonGameBin = this._createButton(
+      300,
+      230,
+      TEXTURES.ICON_FILE,
+      'game.bin',
+    );
+    this.buttonHighscore = this._createButton(
+      500,
+      230,
+      TEXTURES.ICON_TXT,
+      'highscore.txt',
+    );
+    this.buttonGameJam = this._createButton(
+      200,
+      350,
+      TEXTURES.ICON_DIR,
+      'GameJam',
+    );
+    this.buttonTrash = this._createButton(
+      600,
+      420,
+      TEXTURES.ICON_TRASH,
+      'Trash',
+    );
+    this.buttonCredits = this._createButton(
+      400,
+      420,
+      TEXTURES.ICON_TXT,
+      'credits.txt',
+    );
   }
 
   update(): void {}
@@ -86,13 +130,13 @@ export default class SceneMenu extends Phaser.Scene {
           targets: button,
           angle: button.angle + 5,
           duration: 300,
-          ease: 'Power2',
+          ease: 'Bounce.easeInOut',
           yoyo: true,
         });
       });
       button.on('pointerout', () => {});
       button.on('pointerdown', () => {
-        this.scene.start(sStartScene);
+        this._startScene(sStartScene);
       });
     }
 
@@ -105,5 +149,59 @@ export default class SceneMenu extends Phaser.Scene {
       .setOrigin(0.5);
 
     return button;
+  }
+
+  _startScene(sStartScene) {
+    if (sStartScene == SCENES.GAME) {
+      // buttons
+      const buttons = [
+        this.buttonGame,
+        this.buttonGameBin,
+        this.buttonHighscore,
+        this.buttonGameJam,
+        this.buttonTrash,
+        this.buttonCredits,
+      ];
+      buttons.forEach((target) => {
+        target.setVisible(false);
+      });
+      // Loading Text
+      this.tweens.add({
+        targets: this.titleText,
+        scaleX: 0,
+        duration: 600,
+        ease: 'Sine.easeInOut',
+        onComplete: () => {
+          (this.titleText.flipX = true),
+            this.tweens.add({
+              targets: this.titleText,
+              scaleX: 1,
+              duration: 600,
+              ease: 'Sine.easeInOut',
+            });
+        },
+      });
+      // Background
+      this.tweens.add({
+        targets: this.background,
+        scaleX: 0,
+        duration: 600,
+        ease: 'Sine.easeInOut',
+        onComplete: () => {
+          (this.background.flipX = true),
+            this.tweens.add({
+              targets: this.background,
+              scaleX: 8,
+              duration: 600,
+              ease: 'Sine.easeInOut',
+              onComplete: () => {
+                this.scene.start(sStartScene);
+              },
+            });
+        },
+      });
+    } else {
+      this.scene.start(sStartScene);
+    }
   }
 }
