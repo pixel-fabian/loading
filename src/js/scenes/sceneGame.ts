@@ -5,6 +5,7 @@ import ANIMATIONS from '../constants/AnimationKeys';
 import AUDIO from '../constants/AudioKeys';
 import LoadingBar from '../objects/loadingBar';
 import Parcels from '../objects/parcels';
+import Parcel from '../objects/parcel';
 import Player from '../objects/player';
 import Bullets from '../objects/bullets';
 
@@ -164,11 +165,18 @@ export default class SceneGame extends Phaser.Scene {
       null,
       this,
     );
+    this.physics.add.collider(
+      this.parcels,
+      this.parcels,
+      this._onCollisionParcelParcel,
+      null,
+      this,
+    );
   }
 
   _onCollisionBulletParcel(
     bullet: Phaser.Physics.Arcade.Sprite,
-    parcel: Phaser.Physics.Arcade.Sprite,
+    parcel: Parcel,
   ) {
     if (bullet.active && parcel.active) {
       this.soundExplode.play();
@@ -181,7 +189,25 @@ export default class SceneGame extends Phaser.Scene {
     }
   }
 
-  _parcelExplode(parcel: Phaser.Physics.Arcade.Sprite) {
+  _onCollisionParcelParcel(parcel1: Parcel, parcel2: Parcel) {
+    if (parcel1.active && parcel2.active) {
+      if (parcel1.body.velocity.x <= 0 && parcel2.anims.isPlaying == false) {
+        this.soundExplode.play();
+        this._parcelExplode(parcel2);
+        this._updateScore(50);
+      } else if (
+        parcel2.body.velocity.x <= 0 &&
+        parcel1.anims.isPlaying == false
+      ) {
+        this.soundExplode.play();
+        this._parcelExplode(parcel1);
+        this._updateScore(50);
+      }
+    }
+  }
+
+  _parcelExplode(parcel: Parcel) {
+    parcel.exploding = true;
     switch (parcel.texture.key) {
       case TEXTURES.PARCEL:
         parcel.play(ANIMATIONS.PARCEL_EXPLODE);
