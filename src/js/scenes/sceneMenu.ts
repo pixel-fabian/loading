@@ -170,13 +170,13 @@ export default class SceneMenu extends Phaser.Scene {
         duration: 600,
         ease: 'Sine.easeInOut',
         onComplete: () => {
-          (this.titleText.flipX = true),
-            this.tweens.add({
-              targets: this.titleText,
-              scaleX: 1,
-              duration: 600,
-              ease: 'Sine.easeInOut',
-            });
+          this.titleText.flipX = true;
+          this.tweens.add({
+            targets: this.titleText,
+            scaleX: 1,
+            duration: 600,
+            ease: 'Sine.easeInOut',
+          });
         },
       });
       // Background
@@ -186,16 +186,17 @@ export default class SceneMenu extends Phaser.Scene {
         duration: 600,
         ease: 'Sine.easeInOut',
         onComplete: () => {
-          (this.background.flipX = true),
-            this.tweens.add({
-              targets: this.background,
-              scaleX: 8,
-              duration: 600,
-              ease: 'Sine.easeInOut',
-              onComplete: () => {
-                this.scene.start(sStartScene);
-              },
-            });
+          this.background.flipX = true;
+          this.cameras.main.zoomTo(1.3, 600, 'Sine.easeOut');
+          this.tweens.add({
+            targets: this.background,
+            scaleX: 8,
+            duration: 600,
+            ease: 'Sine.easeInOut',
+            onComplete: () => {
+              this.scene.start(sStartScene);
+            },
+          });
         },
       });
     } else {

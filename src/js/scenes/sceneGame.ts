@@ -23,7 +23,7 @@ export default class SceneGame extends Phaser.Scene {
   private soundExplode?: Phaser.Sound.BaseSound;
   private soundsParcel?;
   public soundShoot?: Phaser.Sound.BaseSound;
-  private score = 0;
+  private score;
   private scoreText: Phaser.GameObjects.Text;
   private spawnTimer: Phaser.Time.TimerEvent;
 
@@ -42,6 +42,7 @@ export default class SceneGame extends Phaser.Scene {
   preload(): void {}
 
   create(): void {
+    this.score = 0;
     const camera = this.cameras.add(0, 0, 800, 600);
     camera.setBackgroundColor('rgba(103, 130, 126, 1)');
     this.background = this.add
@@ -229,6 +230,6 @@ export default class SceneGame extends Phaser.Scene {
 
   _gameOver() {
     this.scene.pause();
-    this.scene.start(SCENES.GAMEOVER);
+    this.scene.start(SCENES.GAMEOVER, { score: this.score });
   }
 }

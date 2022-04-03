@@ -4,6 +4,9 @@ import TEXTURES from '../constants/TextureKeys';
 import Window from '../objects/window';
 
 export default class SceneGameOver extends Phaser.Scene {
+  private startButton;
+  private score = 0;
+
   constructor() {
     super({
       key: SCENES.GAMEOVER,
@@ -14,7 +17,13 @@ export default class SceneGameOver extends Phaser.Scene {
   // LIFECYCLE (init, preload, create, update)    //
   //////////////////////////////////////////////////
 
-  init(): void {}
+  init(data): void {
+    console.log(data);
+
+    if (data.score) {
+      this.score = data.score;
+    }
+  }
 
   preload(): void {}
 
@@ -27,9 +36,28 @@ export default class SceneGameOver extends Phaser.Scene {
       .text(screenCenterX, 200, 'Loading complete', {
         fontFamily: 'BitPotion',
         color: '#000',
-        fontSize: '48px',
+        fontSize: '36px',
       })
       .setOrigin(0.5);
+    this.add
+      .text(screenCenterX, 250, `${this.score}`, {
+        fontFamily: 'BitPotion',
+        color: '#000',
+        fontSize: '36px',
+      })
+      .setOrigin(0.5);
+
+    this.startButton = this.add
+      .text(screenCenterX, 350, '< start game >', {
+        fontFamily: 'BitPotion',
+        color: '#000',
+        fontSize: '64px',
+      })
+      .setOrigin(0.5);
+    this.startButton.setInteractive({ useHandCursor: true });
+    this.startButton.on('pointerdown', () => {
+      this.scene.start(SCENES.GAME, {});
+    });
   }
 
   update(): void {}
