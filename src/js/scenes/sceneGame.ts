@@ -165,9 +165,29 @@ export default class SceneGame extends Phaser.Scene {
       bullet.setVisible(false);
       bullet.body.enable = false;
 
-      parcel.destroy();
+      this._parcelExplode(parcel);
       this._updateScore(50);
     }
+  }
+
+  _parcelExplode(parcel: Phaser.Physics.Arcade.Sprite) {
+    switch (parcel.texture.key) {
+      case TEXTURES.PARCEL:
+        parcel.play(ANIMATIONS.PARCEL_EXPLODE);
+        break;
+      case TEXTURES.PARCEL_SPECIAL:
+        parcel.play(ANIMATIONS.PARCEL_SPECIAL_EXPLODE);
+        break;
+      case TEXTURES.PARCEL_AGGRO:
+        parcel.play(ANIMATIONS.PARCEL_AGGRO_EXPLODE);
+        break;
+      case TEXTURES.PARCEL_DANGER:
+        parcel.play(ANIMATIONS.PARCEL_DANGER_EXPLODE);
+        break;
+    }
+    parcel.on('animationcomplete', () => {
+      parcel.destroy();
+    });
   }
 
   _createAnimations() {
@@ -179,6 +199,42 @@ export default class SceneGame extends Phaser.Scene {
       }),
       frameRate: 5,
       repeat: -1, // -1: infinity
+    });
+    this.anims.create({
+      key: ANIMATIONS.PARCEL_EXPLODE,
+      frames: this.anims.generateFrameNumbers(TEXTURES.PARCEL, {
+        start: 1,
+        end: 5,
+      }),
+      frameRate: 12,
+      repeat: 0, // -1: infinity
+    });
+    this.anims.create({
+      key: ANIMATIONS.PARCEL_AGGRO_EXPLODE,
+      frames: this.anims.generateFrameNumbers(TEXTURES.PARCEL_AGGRO, {
+        start: 1,
+        end: 5,
+      }),
+      frameRate: 12,
+      repeat: 0, // -1: infinity
+    });
+    this.anims.create({
+      key: ANIMATIONS.PARCEL_DANGER_EXPLODE,
+      frames: this.anims.generateFrameNumbers(TEXTURES.PARCEL_DANGER, {
+        start: 1,
+        end: 5,
+      }),
+      frameRate: 12,
+      repeat: 0, // -1: infinity
+    });
+    this.anims.create({
+      key: ANIMATIONS.PARCEL_SPECIAL_EXPLODE,
+      frames: this.anims.generateFrameNumbers(TEXTURES.PARCEL_SPECIAL, {
+        start: 1,
+        end: 5,
+      }),
+      frameRate: 12,
+      repeat: 0, // -1: infinity
     });
   }
 

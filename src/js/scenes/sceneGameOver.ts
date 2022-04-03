@@ -18,8 +18,6 @@ export default class SceneGameOver extends Phaser.Scene {
   //////////////////////////////////////////////////
 
   init(data): void {
-    console.log(data);
-
     if (data.score) {
       this.score = data.score;
     }
