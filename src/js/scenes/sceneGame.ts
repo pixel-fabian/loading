@@ -17,6 +17,7 @@ export default class SceneGame extends Phaser.Scene {
   private keyD: Phaser.Input.Keyboard.Key;
   private keyE: Phaser.Input.Keyboard.Key;
   private keyQ: Phaser.Input.Keyboard.Key;
+  private keyCursors;
   private background: Phaser.GameObjects.Image;
   private loadingBar: LoadingBar;
   private parcels: Parcels;
@@ -124,7 +125,7 @@ export default class SceneGame extends Phaser.Scene {
   update(): void {
     this._movePlayer();
 
-    if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
+    if (Phaser.Input.Keyboard.JustDown(this.keyE) || (Phaser.Input.Keyboard.JustDown(this.keyQ)) {
       const shootLeft = this.player.flipX ? false : true;
 
       if (
@@ -349,6 +350,7 @@ export default class SceneGame extends Phaser.Scene {
     this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+    this.keyCursors = this.input.keyboard.createCursorKeys();
   }
 
   _movePlayer() {
@@ -356,16 +358,16 @@ export default class SceneGame extends Phaser.Scene {
 
     // player movement as vector to ensure same speed diagonally
     const playerDirection = new Phaser.Math.Vector2(0, 0);
-    if (this.keyA.isDown) {
+    if (this.keyA.isDown || this.keyCursors.left.isDown) {
       playerDirection.x -= 1;
       this.player.flipX = false;
-    } else if (this.keyD.isDown) {
+    } else if (this.keyD.isDown || this.keyCursors.right.isDown) {
       playerDirection.x += 1;
       this.player.flipX = true;
     }
-    if (this.keyW.isDown) {
+    if (this.keyW.isDown || this.keyCursors.up.isDown) {
       playerDirection.y -= 1;
-    } else if (this.keyS.isDown) {
+    } else if (this.keyS.isDown || this.keyCursors.down.isDown) {
       playerDirection.y += 1;
     }
     playerDirection.setLength(200);
